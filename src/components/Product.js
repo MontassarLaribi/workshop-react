@@ -2,15 +2,38 @@ import React, { Component } from "react";
 import styled from "styled-components";
 
 export default class Product extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { product: props.product, updated: 0 };
+  }
+
+  componentDidMount() {
+    console.log(
+      "I have finished rendering " +
+        this.props.product.name +
+        " price: " +
+        this.state.product.price
+    );
+  }
+
+  componentDidUpdate() {
+    console.log("I have been updated");
+    console.log(this.state);
+  }
+
+  componentWillUnmount() {
+    console.log("I'm being destroyed");
+  }
+
   render() {
     return (
       <ProductFrame>
         <ProductImageWrapper>
-          <ProductImage src={this.props.product.img}></ProductImage>
+          <ProductImage src={this.state.product.img}></ProductImage>
         </ProductImageWrapper>
         <ProductInfoWrapper>
-          <span>{this.props.product.name}</span>
-          <span>{this.props.product.price}</span>
+          <span>{this.state.product.name}</span>
+          <span>{this.state.product.price}</span>
         </ProductInfoWrapper>
       </ProductFrame>
     );
