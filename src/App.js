@@ -6,8 +6,8 @@ import styled from "styled-components";
 function App() {
   return (
     <AppFrame className="App">
-      {products.map((product) => (
-        <Product></Product>
+      {products.map((product, index) => (
+        <Product key={index}></Product>
       ))}
     </AppFrame>
   );
