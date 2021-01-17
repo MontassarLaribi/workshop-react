@@ -44,7 +44,11 @@ export default class Product extends Component {
         </ProductImageWrapper>
         <ProductInfoWrapper>
           <span>{this.state.product.name}</span>
-          <span>{this.state.product.price}</span>
+          <span>
+            {this.state.product.price}{" "}
+            {/* {Number(this.state.product.price) > 2 ? "expensive" : "Promo"} */}
+            {Number(this.state.product.price) > 2 && "expensive"}
+          </span>
           <button onClick={this.addPrice}>Add 0.1</button>
         </ProductInfoWrapper>
       </ProductFrame>
