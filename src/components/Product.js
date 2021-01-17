@@ -5,6 +5,7 @@ export default class Product extends Component {
   constructor(props) {
     super(props);
     this.state = { product: props.product, updated: 0 };
+    this.addPrice = this.addPrice.bind(this);
   }
 
   componentDidMount() {
@@ -17,12 +18,22 @@ export default class Product extends Component {
   }
 
   componentDidUpdate() {
-    console.log("I have been updated");
-    console.log(this.state);
+    console.log("I have been updated " + this.state.updated + " times");
   }
 
   componentWillUnmount() {
     console.log("I'm being destroyed");
+  }
+
+  addPrice(e) {
+    e.preventDefault();
+    this.setState((oldState) => ({
+      product: {
+        ...oldState.product,
+        price: Number(oldState.product.price) + 0.1,
+      },
+      updated: oldState.updated + 1,
+    }));
   }
 
   render() {
@@ -34,6 +45,7 @@ export default class Product extends Component {
         <ProductInfoWrapper>
           <span>{this.state.product.name}</span>
           <span>{this.state.product.price}</span>
+          <button onClick={this.addPrice}>Add 0.1</button>
         </ProductInfoWrapper>
       </ProductFrame>
     );
