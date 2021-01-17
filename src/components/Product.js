@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 export default class Product extends Component {
   render() {
-    return <ProductFrame></ProductFrame>;
+    return <ProductFrame>{this.props.product.name}</ProductFrame>;
   }
 }
 

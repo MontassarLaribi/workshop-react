@@ -7,7 +7,7 @@ function App() {
   return (
     <AppFrame className="App">
       {products.map((product, index) => (
-        <Product key={index}></Product>
+        <Product product={product} key={index}></Product>
       ))}
     </AppFrame>
   );
