@@ -8,27 +8,59 @@ const Products = React.lazy(() => import("./pages/Products"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
 
 function App() {
+  const connectedUser = undefined;
+
   return (
     <>
       <Header></Header>
       <AppFrame className="App">
         <BrowserRouter basename="/">
           <Suspense fallback={<p>...Loading page please wait</p>}>
-            <Switch>
-              <Route
-                path="/welcome"
-                render={(props) => <Welcome {...props} />}
-              ></Route>
-              <Route
-                path="/products"
-                render={(props) => <Products {...props} />}
-              ></Route>
-              <Route
-                path="/product/:name"
-                render={(props) => <ProductDetails {...props} />}
-              ></Route>
-              <Route exact render={() => <p>Default rendered page!</p>}></Route>
-            </Switch>
+            {connectedUser ? (
+              <Switch>
+                <Route
+                  path="/welcome"
+                  render={(props) => <Welcome {...props} />}
+                ></Route>
+                <Route
+                  path="/products"
+                  render={(props) => <Products {...props} />}
+                ></Route>
+                <Route
+                  path="/product/:name"
+                  render={(props) => <ProductDetails {...props} />}
+                ></Route>
+                <Route
+                  exact
+                  render={() => (
+                    <p>Default rendered page! Welcome {connectedUser.name}</p>
+                  )}
+                ></Route>
+              </Switch>
+            ) : (
+              <Switch>
+                <Route
+                  path="/welcome"
+                  render={(props) => <Welcome {...props} />}
+                ></Route>
+                <Route
+                  path="/login"
+                  render={(props) => <Welcome {...props} />}
+                ></Route>
+                <Route
+                  path="/products"
+                  render={(props) => <Products {...props} />}
+                ></Route>
+                <Route
+                  path="/product/:name"
+                  render={(props) => <ProductDetails {...props} />}
+                ></Route>
+                <Route
+                  exact
+                  render={() => <p>You are not logged in!</p>}
+                ></Route>
+              </Switch>
+            )}
           </Suspense>
         </BrowserRouter>
       </AppFrame>
