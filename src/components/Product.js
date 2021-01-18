@@ -43,7 +43,11 @@ export default class Product extends Component {
           <ProductImage src={this.state.product.img}></ProductImage>
         </ProductImageWrapper>
         <ProductInfoWrapper>
-          <span>{this.state.product.name}</span>
+          <span>
+            <a href={"/product/" + this.state.product.name}>
+              {this.state.product.name}
+            </a>
+          </span>
           <span>
             {this.state.product.price}{" "}
             {/* {Number(this.state.product.price) > 2 ? "expensive" : "Promo"} */}
