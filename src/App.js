@@ -1,10 +1,11 @@
+import React, { Suspense } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
-import Welcome from "./pages/Welcome";
-import Products from "./pages/Products";
-import ProductDetails from "./pages/ProductDetails";
+const Welcome = React.lazy(() => import("./pages/Welcome"));
+const Products = React.lazy(() => import("./pages/Products"));
+const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
 
 function App() {
   return (
@@ -12,21 +13,23 @@ function App() {
       <Header></Header>
       <AppFrame className="App">
         <BrowserRouter basename="/">
-          <Switch>
-            <Route
-              path="/welcome"
-              render={(props) => <Welcome {...props} />}
-            ></Route>
-            <Route
-              path="/products"
-              render={(props) => <Products {...props} />}
-            ></Route>
-            <Route
-              path="/product/:name"
-              render={(props) => <ProductDetails {...props} />}
-            ></Route>
-            <Route exact render={() => <p>Default rendered page!</p>}></Route>
-          </Switch>
+          <Suspense fallback={<p>...Loading page please wait</p>}>
+            <Switch>
+              <Route
+                path="/welcome"
+                render={(props) => <Welcome {...props} />}
+              ></Route>
+              <Route
+                path="/products"
+                render={(props) => <Products {...props} />}
+              ></Route>
+              <Route
+                path="/product/:name"
+                render={(props) => <ProductDetails {...props} />}
+              ></Route>
+              <Route exact render={() => <p>Default rendered page!</p>}></Route>
+            </Switch>
+          </Suspense>
         </BrowserRouter>
       </AppFrame>
     </>
