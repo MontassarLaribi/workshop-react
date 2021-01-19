@@ -1,13 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import products from "../products.json";
-import Product from "../components/Product";
+import ProductFun from "../components/ProductFun";
 
 export default function Products() {
   return (
     <ProductsWrapper>
       {products.map((product, index) => (
-        <Product product={product} key={index}></Product>
+        <ProductFun product={product} key={index}></ProductFun>
       ))}
     </ProductsWrapper>
   );
