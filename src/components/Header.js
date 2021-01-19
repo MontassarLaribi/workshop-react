@@ -1,21 +1,30 @@
-import React, { Component } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../contexts/UserContext";
 
-export default class Header extends Component {
-  render() {
-    return (
-      <HeaderFrame>
-        <ul>
-          <li>
-            <a href="/welcome">Welcome</a>
-          </li>
-          <li>
-            <a href="/products">Products</a>
-          </li>
-        </ul>
-      </HeaderFrame>
-    );
+export default function Header() {
+  const [user, setUser] = useContext(UserContext);
+
+  function toggleUser() {
+    !user ? setUser({ name: "test", roles: ["admin"] }) : setUser(null);
   }
+
+  return (
+    <HeaderFrame>
+      <ul>
+        <li>
+          <a href="/welcome">Welcome</a>
+        </li>
+        <li>
+          <a href="/products">Products</a>
+        </li>
+        <li>
+          connected user :{user?.name ?? "none"}{" "}
+          <button onClick={toggleUser}>Toggle user</button>
+        </li>
+      </ul>
+    </HeaderFrame>
+  );
 }
 
 const HeaderFrame = styled.div`
@@ -29,6 +38,9 @@ const HeaderFrame = styled.div`
     display: flex;
     & > li:not(:nth-child(1)) {
       margin-left: 10px;
+    }
+    & > li:last-child {
+      margin-left: auto;
     }
   }
 `;
