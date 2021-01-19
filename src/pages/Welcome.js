@@ -1,14 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
 
-export default class Welcome extends Component {
-  render() {
-    return (
-      <WelcomeWrapper>
-        <h1>Welcome to our shop</h1>
-      </WelcomeWrapper>
-    );
-  }
+export default function Welcome() {
+  return (
+    <WelcomeWrapper>
+      <h1>Welcome to our shop</h1>
+    </WelcomeWrapper>
+  );
 }
 
 const WelcomeWrapper = styled.div`
