@@ -1,30 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 export default function ProductFun(props) {
-  const [product, setProduct] = useState(props.product);
-  const [updated, setUpdated] = useState(0);
+  const [product] = useState(props.product);
+  const history = useHistory();
 
-  const addPrice = () => {
-    setProduct({ ...product, price: Number(product.price) + 0.1 });
-    setUpdated((u) => u + 1);
+  const updateProduct = () => {
+    history.replace("/update/" + product._id);
   };
-
-  useEffect(() => {
-    console.log(updated);
-  }, [updated]);
-
-  useEffect(() => {
-    console.log(
-      "I have finished rendering " +
-        props.product.title +
-        " price: " +
-        props.product.price
-    );
-    return () => {
-      console.log("I'm being destroyed");
-    };
-  });
 
   return (
     <ProductFrame>
@@ -44,7 +28,7 @@ export default function ProductFun(props) {
           {/* {Number(this.state.product.price) > 2 ? "expensive" : "Promo"} */}
           {Number(product.price, 3) > 2 && "expensive"}
         </span>
-        <button onClick={addPrice}>Add 0.1</button>
+        <button onClick={updateProduct}>Update</button>
       </ProductInfoWrapper>
     </ProductFrame>
   );
