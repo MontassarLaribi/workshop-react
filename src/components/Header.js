@@ -19,6 +19,9 @@ export default function Header() {
           <a href="/products">Products</a>
         </li>
         <li>
+          <a href="/add">Add</a>
+        </li>
+        <li>
           connected user :{user?.name ?? "none"}{" "}
           <button onClick={toggleUser}>Toggle user</button>
         </li>

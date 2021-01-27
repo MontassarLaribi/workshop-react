@@ -4,6 +4,7 @@ import "./App.css";
 import styled from "styled-components";
 import Header from "./components/Header";
 import { UserContext } from "./contexts/UserContext";
+import AddProduct from "./pages/AddProduct";
 const Welcome = React.lazy(() => import("./pages/Welcome"));
 const Products = React.lazy(() => import("./pages/Products"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
@@ -28,6 +29,7 @@ function App() {
                     path="/products"
                     render={(props) => <Products {...props} />}
                   ></Route>
+
                   <Route
                     path="/product/:name"
                     render={(props) => <ProductDetails {...props} />}
@@ -48,6 +50,10 @@ function App() {
                   <Route
                     path="/login"
                     render={(props) => <Welcome {...props} />}
+                  ></Route>
+                  <Route
+                    path="/add"
+                    render={(props) => <AddProduct {...props} />}
                   ></Route>
                   <Route
                     path="/products"
