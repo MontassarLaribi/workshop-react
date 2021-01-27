@@ -29,6 +29,7 @@ export default function ProductFun(props) {
           {Number(product.price, 3) > 2 && "expensive"}
         </span>
         <button onClick={updateProduct}>Update</button>
+        <button onClick={() => props.deleteProduct(product._id)}>Delete</button>
       </ProductInfoWrapper>
     </ProductFrame>
   );

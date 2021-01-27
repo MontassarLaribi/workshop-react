@@ -2,16 +2,27 @@ import React from "react";
 import styled from "styled-components";
 import ProductFun from "../components/ProductFun";
 import { useApi } from "../hooks/useApi";
+import { queryApi } from "../utils/queryApi";
 
 export default function Products() {
-  const [products, err] = useApi("products");
+  const [products, err, reload] = useApi("products");
 
-  console.log(products);
+  const deleteProduct = async (id) => {
+    const [err] = await queryApi("product/" + id, {}, "DELETE");
+    if (err) {
+      console.log(err);
+    } else await reload();
+  };
+
   return (
     <ProductsWrapper>
       {err && <Errors>{err}</Errors>}
       {products?.map((product, index) => (
-        <ProductFun product={product} key={index}></ProductFun>
+        <ProductFun
+          product={product}
+          deleteProduct={deleteProduct}
+          key={index}
+        ></ProductFun>
       ))}
     </ProductsWrapper>
   );
