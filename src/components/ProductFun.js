@@ -1,13 +1,30 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
+import { queryApi } from "../utils/queryApi";
+import { useDispatch } from "react-redux";
+import {
+  deleteProduct,
+  setErrors,
+} from "../redux/slices/productsSlice";
 
 export default function ProductFun(props) {
   const [product] = useState(props.product);
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const updateProduct = () => {
     history.replace("/update/" + product._id);
+  };
+
+  const deleteProductEvent = async () => {
+    const [err] = await queryApi("product/" + product._id, {}, "DELETE");
+    if (err) {
+      dispatch(setErrors(err));
+      console.log(err);
+    } else {
+      dispatch(deleteProduct(product._id));
+    }
   };
 
   return (
@@ -29,7 +46,7 @@ export default function ProductFun(props) {
           {Number(product.price, 3) > 2 && "expensive"}
         </span>
         <button onClick={updateProduct}>Update</button>
-        <button onClick={() => props.deleteProduct(product._id)}>Delete</button>
+        <button onClick={deleteProductEvent}>Delete</button>
       </ProductInfoWrapper>
     </ProductFrame>
   );
