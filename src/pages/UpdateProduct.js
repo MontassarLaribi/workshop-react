@@ -5,44 +5,47 @@ import * as Yup from "yup";
 import { useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { queryApi } from "../utils/queryApi";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  selectSelectedProduct,
+  unselectProduct,
+  updateProduct,
+} from "../redux/slices/productsSlice";
 
 export default function UpdateProduct() {
   const { id } = useParams();
   const history = useHistory();
   const [showLoader, setShowLoader] = useState(false);
   const [error, setError] = useState({ visible: false, message: "" });
+  const selectedProduct = useSelector(selectSelectedProduct);
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      price: "",
+      title: selectedProduct.title,
+      price: selectedProduct.price,
     },
     validationSchema: yupSchema,
     onSubmit: async (values) => {
       setShowLoader(true);
-      const [, err] = await queryApi("product/" + id, values, "PUT", true);
+      const [res, err] = await queryApi("product/" + id, values, "PUT", true);
       if (err) {
         setShowLoader(false);
         setError({
           visible: true,
           message: JSON.stringify(err.errors, null, 2),
         });
-      } else history.push("/products");
+      } else {
+        dispatch(updateProduct(res));
+        dispatch(unselectProduct());
+        history.push("/products");
+      }
     },
   });
 
   useEffect(() => {
-    async function fetchData() {
-      const [res, err] = await queryApi("product/" + id);
-      setError({
-        visible: true,
-        message: JSON.stringify(err?.errors, null, 2),
-      });
-      formik.setValues({ title: res.title, price: res.price });
-    }
-    fetchData();
-    // eslint-disable-next-line
-  }, [id]);
+    if (!selectedProduct) history.replace("/products");
+  }, [selectedProduct, history]);
 
   return (
     <Wrapper className="fade">
