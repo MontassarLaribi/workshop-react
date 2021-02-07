@@ -8,6 +8,7 @@ import {
   selectProduct,
   setErrors,
 } from "../redux/slices/productsSlice";
+import { LazyImage } from "./LazyImage";
 
 export default function ProductFun(props) {
   const [product] = useState(props.product);
@@ -67,7 +68,7 @@ const ProductImageWrapper = styled.div`
   margin: 5px;
   max-width: 150px;
 `;
-const ProductImage = styled.img`
+const ProductImage = styled(LazyImage)`
   width: 100%;
   height: 100%;
   border-radius: 25px;
