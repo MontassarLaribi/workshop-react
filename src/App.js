@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useState, useEffect } from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import "./App.css";
 import styled from "styled-components";
@@ -6,13 +6,18 @@ import Header from "./components/Header";
 import { UserContext } from "./contexts/UserContext";
 import AddProduct from "./pages/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct";
-
+import { fetchProducts } from "./redux/slices/productsSlice";
+import { useDispatch } from "react-redux";
 const Welcome = React.lazy(() => import("./pages/Welcome"));
 const Products = React.lazy(() => import("./pages/Products"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
 
 function App() {
   const [connectedUser, setConnectedUser] = useState(null);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, [dispatch]);
 
   return (
     <>
