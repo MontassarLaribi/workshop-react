@@ -8,10 +8,10 @@ import AddProduct from "./pages/AddProduct";
 import UpdateProduct from "./pages/UpdateProduct";
 import { fetchProducts } from "./redux/slices/productsSlice";
 import { useDispatch } from "react-redux";
+import { Helmet } from "react-helmet";
 const Welcome = React.lazy(() => import("./pages/Welcome"));
 const Products = React.lazy(() => import("./pages/Products"));
 const ProductDetails = React.lazy(() => import("./pages/ProductDetails"));
-
 function App() {
   const [connectedUser, setConnectedUser] = useState(null);
   const dispatch = useDispatch();
@@ -21,6 +21,10 @@ function App() {
 
   return (
     <>
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>My awesome shop</title>
+      </Helmet>
       <UserContext.Provider value={[connectedUser, setConnectedUser]}>
         <Header></Header>
         <AppFrame className="App">
