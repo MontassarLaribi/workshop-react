@@ -5,6 +5,7 @@ import { queryApi } from "../utils/queryApi";
 import { useDispatch } from "react-redux";
 import {
   deleteProduct,
+  selectProduct,
   setErrors,
 } from "../redux/slices/productsSlice";
 
@@ -14,6 +15,7 @@ export default function ProductFun(props) {
   const dispatch = useDispatch();
 
   const updateProduct = () => {
+    dispatch(selectProduct(product));
     history.replace("/update/" + product._id);
   };
 
