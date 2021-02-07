@@ -1,27 +1,29 @@
-import React, { Component } from "react";
+import React from "react";
 import styled from "styled-components";
-import products from "../products.json";
-import Product from "../components/Product";
+import { useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import ProductFun from "../components/ProductFun";
 
-export default class ProductDetails extends Component {
-  render() {
-    const name = this.props.match.params.name;
-    const toRender = products.filter((product) => product.name === name)[0];
-    return (
-      <>
-        <button onClick={() => this.props.history.replace("/products")}>
-          Return to products
-        </button>
-        <ProductsWrapper>
-          {toRender ? (
-            <Product product={toRender}></Product>
-          ) : (
-            <p>Product not found</p>
-          )}
-        </ProductsWrapper>
-      </>
-    );
-  }
+export default function ProductDetails(props) {
+  const history = useHistory();
+  const name = props.match.params.name;
+  const toRender = useSelector((state) =>
+    state.products.products.find((item) => item.title === name)
+  );
+  return (
+    <>
+      <button onClick={() => history.replace("/products")}>
+        Return to products
+      </button>
+      <ProductsWrapper>
+        {toRender ? (
+          <ProductFun product={toRender}></ProductFun>
+        ) : (
+          <p>Product not found</p>
+        )}
+      </ProductsWrapper>
+    </>
+  );
 }
 
 const ProductsWrapper = styled.div`
