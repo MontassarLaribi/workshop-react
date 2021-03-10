@@ -21,7 +21,7 @@ export default function ProductFun(props) {
   };
 
   const deleteProductEvent = async () => {
-    const [err] = await queryApi("product/" + product._id, {}, "DELETE");
+    const [, err] = await queryApi("product/" + product._id, {}, "DELETE");
     if (err) {
       dispatch(setErrors(err));
       console.log(err);
